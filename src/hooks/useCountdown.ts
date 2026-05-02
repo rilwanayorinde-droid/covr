@@ -1,7 +1,5 @@
-﻿import { useState, useEffect } from 'react'
-
+import { useState, useEffect } from 'react'
 export type CountdownTime = { h: number; m: number; s: number }
-
 export function useCountdown(initial: CountdownTime): CountdownTime {
   const [time, setTime] = useState<CountdownTime>(initial)
   useEffect(() => {
