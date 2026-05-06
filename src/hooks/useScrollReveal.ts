@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
-export function useScrollReveal(): void {
+export function useScrollReveal() {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>('.reveal')
-    const observer = new IntersectionObserver(
-      (entries) => { entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) } }) },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    )
-    els.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target) } })
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' })
+    els.forEach(el => obs.observe(el))
+    return () => obs.disconnect()
   }, [])
 }

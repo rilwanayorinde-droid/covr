@@ -1,97 +1,73 @@
 import { useParams, Link } from 'react-router-dom'
 import { FEATURED_ARTISTS, LIVE_DROPS } from '../data'
+import LiveCard from '../components/LiveCard'
 
 export default function ArtistProfile() {
   const { id } = useParams<{ id: string }>()
   const artist = FEATURED_ARTISTS.find(a => String(a.id) === id)
   if (!artist) return (
-    <div className="flex items-center justify-center" style={{ minHeight: '100vh', background: 'var(--ink)', paddingTop: '72px' }}>
-      <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '60px', color: 'var(--off-white)' }}>Artist not found</h1>
-    </div>
+    <main style={{ paddingTop: '64px', minHeight: '100vh', background: 'var(--c-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <h1 className="f-display" style={{ fontSize: '48px', color: 'var(--c-ink3)' }}>Artist not found</h1>
+    </main>
   )
   const drops = LIVE_DROPS.filter(d => d.artist === artist.name)
   const displayDrops = drops.length > 0 ? drops : LIVE_DROPS.slice(0, 2)
 
   return (
-    <main style={{ paddingTop: '72px', minHeight: '100vh', background: 'var(--ink)' }}>
+    <main style={{ paddingTop: '64px', background: 'var(--c-bg)', minHeight: '100vh' }}>
       {/* Banner */}
-      <div className="relative overflow-hidden" style={{ height: '420px' }}>
-        <img src={artist.avatar} alt={artist.name} className="w-full h-full object-cover" style={{ filter: 'brightness(0.3) saturate(0.5)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, var(--ink) 0%, transparent 60%)' }} />
-        <div className="absolute bottom-0 left-0 right-0 max-w-[1400px] mx-auto px-6 md:px-10 pb-12">
-          <div className="flex items-center gap-3 mb-4">
-            {artist.verified && (
-              <span className="flex items-center gap-1.5 px-3 py-1.5" style={{ background: 'rgba(10,10,10,0.85)', border: '1px solid var(--gold)' }}>
-                <span style={{ color: 'var(--gold)', fontSize: '10px' }}>◈</span>
-                <span className="font-label" style={{ fontSize: '8px', color: 'var(--gold)' }}>Verified Artist</span>
-              </span>
-            )}
-            <span className="font-label px-3 py-1.5" style={{ fontSize: '8px', color: 'var(--sub)', background: 'rgba(10,10,10,0.85)', border: '1px solid var(--rule)' }}>{artist.artistType === 'label' ? 'Label Artist' : 'Independent'}</span>
+      <div style={{ position: 'relative', height: '380px', overflow: 'hidden', background: 'var(--c-bg3)' }}>
+        <img src={artist.avatar} alt={artist.name} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4) saturate(0.4)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--c-bg) 0%, transparent 55%)' }} />
+        <div className="container" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 24px 40px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            {artist.verified && <span className="badge badge-gold" style={{ background: 'rgba(250,250,247,0.95)' }}>◈ Verified</span>}
+            <span className="badge badge-ink" style={{ background: 'rgba(250,250,247,0.95)' }}>{artist.artistType === 'label' ? 'Label Artist' : 'Independent'}</span>
           </div>
-          <p className="label mb-3" style={{ fontSize: '9px' }}>{artist.genre}</p>
-          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: 'clamp(48px, 8vw, 100px)', lineHeight: 1, color: 'var(--off-white)', letterSpacing: '-0.02em' }}>{artist.name}</h1>
+          <p className="f-label" style={{ marginBottom: '6px' }}>{artist.genre}</p>
+          <h1 className="f-display" style={{ fontSize: 'clamp(40px, 8vw, 80px)', color: 'var(--c-ink)', lineHeight: 1 }}>{artist.name}</h1>
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
-        <div className="grid md:grid-cols-3 gap-12 md:gap-16">
+      <div className="container" style={{ padding: '48px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '56px', alignItems: 'start' }}>
           {/* Sidebar */}
-          <div>
-            <img src={artist.avatar} alt={artist.name} className="w-full object-cover grayscale" style={{ aspectRatio: '3/4', border: '1px solid var(--rule)', marginBottom: '16px' }} />
-            {/* Stats */}
-            <div className="grid grid-cols-2 mb-4" style={{ border: '1px solid var(--rule)' }}>
-              {[{ label: 'Artworks', value: String(artist.pieces) }, { label: 'Total Sales', value: artist.sales }, { label: 'Followers', value: artist.followers }, { label: 'Monthly', value: artist.monthlyListeners }].map((s, i) => (
-                <div key={s.label} className="p-4" style={{ borderRight: i % 2 === 0 ? '1px solid var(--rule)' : 'none', borderBottom: i < 2 ? '1px solid var(--rule)' : 'none', background: 'var(--ink-2)' }}>
-                  <p className="font-label mb-1" style={{ fontSize: '8px', color: 'var(--sub)' }}>{s.label}</p>
-                  <p className="gold-text" style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '22px' }}>{s.value}</p>
+          <div style={{ position: 'sticky', top: '80px' }}>
+            <img src={artist.avatar} alt={artist.name} style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', filter: 'grayscale(1)', border: '1px solid var(--c-rule)', marginBottom: '1px' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--c-rule)', marginBottom: '1px' }}>
+              {[{ l: 'Artworks', v: String(artist.pieces) }, { l: 'Sales', v: artist.sales }, { l: 'Followers', v: artist.followers }, { l: 'Monthly', v: artist.monthlyListeners }].map((s, i) => (
+                <div key={s.l} style={{ background: 'var(--c-bg2)', padding: '14px 16px' }}>
+                  <p className="f-label" style={{ fontSize: '8px', marginBottom: '2px' }}>{s.l}</p>
+                  <p className={`f-display ${i === 1 ? 'gold' : ''}`} style={{ fontSize: '16px', color: i === 1 ? undefined : 'var(--c-ink)' }}>{s.v}</p>
                 </div>
               ))}
             </div>
-            <div className="p-5 mb-4" style={{ border: '1px solid var(--rule)', background: 'var(--ink-2)' }}>
-              <p className="label mb-4" style={{ fontSize: '9px' }}>About</p>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: '14px', color: 'var(--sub)', fontWeight: 300, lineHeight: 1.8 }}>{artist.bio}</p>
-              <p className="font-label mt-4" style={{ fontSize: '9px', color: 'var(--gold)' }}>{artist.instagram}</p>
+            <div style={{ padding: '20px', border: '1px solid var(--c-rule)', background: 'var(--c-bg2)', marginBottom: '12px' }}>
+              <p className="f-label" style={{ fontSize: '8px', marginBottom: '12px' }}>About</p>
+              <p style={{ fontSize: '13px', color: 'var(--c-ink3)', fontWeight: 300, lineHeight: 1.8 }}>{artist.bio}</p>
+              <p style={{ marginTop: '12px', fontSize: '12px', color: 'var(--c-gold)', fontWeight: 400 }}>{artist.instagram}</p>
             </div>
-            <Link to="/artist-submit" className="btn btn-ghost w-full justify-center" style={{ color: 'var(--gold)', borderColor: 'var(--gold)' }}>Contact Artist</Link>
+            <Link to="/artist-submit" className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', color: 'var(--c-gold)', borderColor: 'rgba(139,105,20,0.3)' }}>Contact Artist</Link>
           </div>
 
-          {/* Artworks */}
-          <div className="md:col-span-2">
-            <p className="label mb-8" style={{ fontSize: '9px' }}>Artworks on COVR</p>
-            <div className="grid sm:grid-cols-2 gap-5">
-              {displayDrops.map(drop => (
-                <Link to={"/artwork/" + drop.id} key={drop.id} className="art-card group" style={{ textDecoration: 'none' }}>
-                  <div className="relative overflow-hidden" style={{ aspectRatio: '1 / 1' }}>
-                    <img src={drop.image} alt={drop.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy" />
-                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%)' }} />
-                    <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5" style={{ background: 'rgba(10,10,10,0.9)' }}>
-                      <div className="live-pulse" /><span className="font-label" style={{ fontSize: '9px', color: '#FF3B30' }}>Live</span>
-                    </div>
-                  </div>
-                  <div className="p-5" style={{ background: 'var(--ink-2)' }}>
-                    <p className="font-label mb-1" style={{ fontSize: '9px', color: 'var(--sub)' }}>{drop.album}</p>
-                    <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '22px', color: 'var(--off-white)', marginBottom: '8px' }}>{drop.title}</h3>
-                    <p className="gold-text" style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '20px' }}>{drop.currentBid}</p>
-                  </div>
-                </Link>
-              ))}
+          {/* Main */}
+          <div>
+            <p className="f-label" style={{ marginBottom: '24px' }}>Artworks on COVR</p>
+            <div className="grid-2">
+              {displayDrops.map((drop, i) => <LiveCard key={drop.id} drop={drop} delay={i + 1} />)}
             </div>
-
-            {/* Story/data section */}
-            <div className="mt-8 p-6" style={{ border: '1px solid var(--rule)', background: 'var(--ink-2)' }}>
-              <p className="label mb-5" style={{ fontSize: '9px' }}>Artist Insights</p>
-              <div className="grid grid-cols-2 gap-4">
-                {[{ label: 'Avg. Sale Price', value: '₦310K' }, { label: 'Fastest Sale', value: '4 min' }, { label: 'Total Bidders', value: '142' }, { label: 'Return Collectors', value: '38%' }].map(s => (
-                  <div key={s.label} className="p-4" style={{ border: '1px solid var(--rule)' }}>
-                    <p className="font-label mb-1" style={{ fontSize: '8px', color: 'var(--sub)' }}>{s.label}</p>
-                    <p style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '24px', color: 'var(--off-white)' }}>{s.value}</p>
-                  </div>
-                ))}
-              </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1px', background: 'var(--c-rule)', marginTop: '32px' }}>
+              {[{ l: 'Avg. Sale Price', v: '₦310K' }, { l: 'Fastest Sale', v: '4 min' }, { l: 'Total Bidders', v: '142' }, { l: 'Return Collectors', v: '38%' }].map(s => (
+                <div key={s.l} style={{ background: 'var(--c-bg2)', padding: '20px 24px' }}>
+                  <p className="f-label" style={{ fontSize: '8px', marginBottom: '4px' }}>{s.l}</p>
+                  <p className="f-display" style={{ fontSize: '22px', color: 'var(--c-ink)' }}>{s.v}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
+      <style>{`@media(max-width:768px){.profile-grid{grid-template-columns:1fr!important;}}`}</style>
     </main>
   )
 }

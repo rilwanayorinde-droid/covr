@@ -1,31 +1,29 @@
 import { useState, useEffect } from 'react'
 type T = { h: number; m: number; s: number }
-function useTick(init: T): T {
-  const [time, setTime] = useState<T>(init)
+function useTick(i: T): T {
+  const [t, setT] = useState<T>(i)
   useEffect(() => {
-    const id = setInterval(() => {
-      setTime((t) => {
-        let { h, m, s } = t
-        s--; if (s < 0) { s = 59; m-- } if (m < 0) { m = 59; h-- } if (h < 0) { h = 0; m = 0; s = 0 }
-        return { h, m, s }
-      })
-    }, 1000)
+    const id = setInterval(() => setT(prev => {
+      let { h, m, s } = prev
+      s--; if (s < 0) { s = 59; m-- } if (m < 0) { m = 59; h-- } if (h < 0) { h = m = s = 0 }
+      return { h, m, s }
+    }), 1000)
     return () => clearInterval(id)
   }, [])
-  return time
+  return t
 }
-function Seg({ value, label }: { value: number; label: string }) {
-  return <div className="cd-seg"><span className="cd-num">{String(value).padStart(2, '0')}</span><span className="cd-label">{label}</span></div>
+function Unit({ v, l }: { v: number; l: string }) {
+  return <div className="cd-unit"><span className="cd-val">{String(v).padStart(2,'0')}</span><span className="cd-lbl">{l}</span></div>
 }
 export default function Countdown({ initial }: { initial: T }) {
-  const time = useTick(initial)
+  const t = useTick(initial)
   return (
-    <div className="flex items-end gap-1">
-      <Seg value={time.h} label="hr" />
-      <span className="cd-num" style={{ color: 'var(--rule-2)', marginBottom: '12px', animation: 'blink 1.1s step-end infinite' }}>:</span>
-      <Seg value={time.m} label="min" />
-      <span className="cd-num" style={{ color: 'var(--rule-2)', marginBottom: '12px', animation: 'blink 1.1s step-end infinite' }}>:</span>
-      <Seg value={time.s} label="sec" />
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px' }}>
+      <Unit v={t.h} l="hr" />
+      <span className="cd-val" style={{ color: 'var(--c-rule2)', marginBottom: '12px', fontSize: '14px' }}>:</span>
+      <Unit v={t.m} l="min" />
+      <span className="cd-val" style={{ color: 'var(--c-rule2)', marginBottom: '12px', fontSize: '14px' }}>:</span>
+      <Unit v={t.s} l="sec" />
     </div>
   )
 }

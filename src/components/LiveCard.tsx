@@ -1,34 +1,37 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import type { Drop } from '../data'
 import Countdown from './Countdown'
-const DC = ['', 'reveal-delay-1', 'reveal-delay-2', 'reveal-delay-3', 'reveal-delay-4']
-export default function LiveCard({ drop, index }: { drop: Drop; index: number }) {
+
+export default function LiveCard({ drop, delay = 0 }: { drop: Drop; delay?: number }) {
   return (
-    <Link to={"/artwork/" + drop.id} className={"art-card group reveal " + DC[(index % 4) + 1] + " flex flex-col"} style={{ textDecoration: 'none' }}>
-      <div className="relative overflow-hidden" style={{ aspectRatio: '1 / 1' }}>
-        <img src={drop.image} alt={drop.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%)' }} />
-        <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5" style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(8px)' }}>
-          <div className="live-pulse" /><span className="font-label" style={{ fontSize: '9px', color: '#FF3B30' }}>Live · {drop.bids} bids</span>
+    <Link to={`/artwork/${drop.id}`} className={`card reveal delay-${delay}`} style={{ display: 'flex', flexDirection: 'column', textDecoration: 'none' }}>
+      <div className="img-hover" style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: 'var(--c-bg2)' }}>
+        <img src={drop.image} alt={drop.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(26,25,22,0.5) 0%, transparent 50%)' }} />
+        <div style={{ position: 'absolute', top: '12px', left: '12px', display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+          <span className="badge badge-live" style={{ background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(8px)' }}>
+            <span className="live-dot" />Live · {drop.bids} bids
+          </span>
         </div>
-        <div className="absolute top-4 right-4 px-3 py-1.5" style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(8px)' }}>
-          <span className="font-label" style={{ fontSize: '9px', color: 'var(--gold-pale)' }}>{drop.edition}</span>
+        <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
+          <span className="badge badge-gold" style={{ background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(8px)' }}>{drop.edition}</span>
         </div>
       </div>
-      <div className="flex flex-col gap-4 p-5" style={{ background: 'var(--ink-2)', flex: 1 }}>
+      <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <p className="font-label mb-1" style={{ color: 'var(--sub)', fontSize: '9px' }}>{drop.artist} — {drop.album}</p>
-          <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '24px', color: 'var(--off-white)', lineHeight: 1.2 }}>{drop.title}</h3>
+          <p className="f-label" style={{ marginBottom: '4px', fontSize: '9px' }}>{drop.artist} — {drop.album}</p>
+          <h3 className="f-display" style={{ fontSize: '22px', color: 'var(--c-ink)' }}>{drop.title}</h3>
         </div>
-        <div className="flex items-end justify-between pt-4" style={{ borderTop: '1px solid var(--rule)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', paddingTop: '16px', borderTop: '1px solid var(--c-rule)', marginTop: 'auto' }}>
           <div>
-            <p className="font-label mb-1" style={{ color: 'var(--sub)', fontSize: '9px' }}>Current Bid</p>
-            <p className="gold-text" style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300, fontSize: '26px' }}>{drop.currentBid}</p>
+            <p className="f-label" style={{ fontSize: '8px', marginBottom: '4px' }}>Current Bid</p>
+            <p className="f-display gold" style={{ fontSize: '22px' }}>{drop.currentBid}</p>
           </div>
           <Countdown initial={drop.endsIn} />
         </div>
-        <div className="btn btn-gold w-full justify-center mt-1" style={{ fontSize: '10px' }}>
-          Place Bid <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+        <div className="btn btn-primary" style={{ justifyContent: 'center', fontSize: '10px' }}>
+          Place Bid
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
         </div>
       </div>
     </Link>
