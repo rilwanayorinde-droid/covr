@@ -26,7 +26,7 @@ export default function Drops() {
       <div className="container section">
         {tab === 'live' && (
           <div className="grid-3">
-            {LIVE_DROPS.map((drop) => <LiveCard key={drop.id} drop={drop} delay={(i % 3) + 1} />)}
+            {LIVE_DROPS.map((drop, i) => <LiveCard key={drop.id} drop={drop} delay={(i % 3) + 1} />)}
           </div>
         )}
         {tab === 'upcoming' && (
@@ -79,5 +79,6 @@ export default function Drops() {
     </main>
   )
 }
+
 
 
