@@ -26,12 +26,12 @@ export default function Drops() {
       <div className="container section">
         {tab === 'live' && (
           <div className="grid-3">
-            {LIVE_DROPS.map((drop, i) => <LiveCard key={drop.id} drop={drop} delay={(i % 3) + 1} />)}
+            {LIVE_DROPS.map((drop) => <LiveCard key={drop.id} drop={drop} delay={(i % 3) + 1} />)}
           </div>
         )}
         {tab === 'upcoming' && (
           <div className="grid-4">
-            {UPCOMING_DROPS.map((drop, i) => (
+            {UPCOMING_DROPS.map((drop) => (
               <Link to={`/artwork/${drop.id}`} key={drop.id} className="card" style={{ textDecoration: 'none' }}>
                 <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: 'var(--c-bg3)' }}>
                   <img src={drop.image} alt={drop.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.3) brightness(0.55)' }} loading="lazy" />
@@ -79,4 +79,5 @@ export default function Drops() {
     </main>
   )
 }
+
 
