@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LIVE_DROPS, UPCOMING_DROPS, PAST_DROPS } from '../data'
 import LiveCard from '../components/LiveCard'
@@ -64,7 +64,7 @@ export default function Drops() {
                   </div>
                 </div>
                 <div style={{ padding: '20px' }}>
-                  <p className="f-label" style={{ fontSize: '8px', marginBottom: '4px' }}>{drop.artist} · {drop.date}</p>
+                  <p className="f-label" style={{ fontSize: '8px', marginBottom: '4px' }}>{drop.artist} Â· {drop.date}</p>
                   <h3 className="f-display" style={{ fontSize: '20px', color: 'var(--c-ink)', marginBottom: '16px' }}>{drop.title}</h3>
                   <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '16px', borderTop: '1px solid var(--c-rule)' }}>
                     <div><p className="f-label" style={{ fontSize: '8px', marginBottom: '2px' }}>Final Sale</p><p className="f-display gold" style={{ fontSize: '18px' }}>{drop.soldFor}</p></div>
@@ -79,3 +79,4 @@ export default function Drops() {
     </main>
   )
 }
+

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 type Step = 1 | 2 | 3 | 4
@@ -90,7 +90,7 @@ export default function ArtistSubmit() {
               ].map(f => (
                 <div key={f.k}>
                   <p className="f-label" style={{ fontSize: '8px', marginBottom: '8px' }}>{f.l}</p>
-                  <input type={f.t} value={(form as Record<string, string>)[f.k]} onChange={e => u(f.k, e.target.value)} placeholder={f.p} className="input" />
+                  <input type={f.t} value={(form as unknown as Record<string, string>)[f.k]} onChange={e => u(f.k, e.target.value)} placeholder={f.p} className="input" />
                 </div>
               ))}
               <div>
@@ -159,15 +159,15 @@ export default function ArtistSubmit() {
               <div style={{ border: '2px dashed var(--c-rule2)', background: 'var(--c-bg2)', height: '140px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-ink3)" strokeWidth="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" /></svg>
                 <p className="f-label" style={{ fontSize: '9px' }}>Drop file here or click to upload</p>
-                <p style={{ fontSize: '11px', color: 'var(--c-ink3)', fontWeight: 300 }}>Min. 3000×3000px · PNG or TIFF · Original artwork only</p>
+                <p style={{ fontSize: '11px', color: 'var(--c-ink3)', fontWeight: 300 }}>Min. 3000Ã—3000px Â· PNG or TIFF Â· Original artwork only</p>
               </div>
             </div>
             <div>
               <p className="f-label" style={{ fontSize: '8px', marginBottom: '8px' }}>Story Behind This Artwork</p>
-              <textarea value={form.description} onChange={e => u('description', e.target.value)} placeholder="Tell collectors the story — what inspired this artwork, how it was created, what it means..." rows={5} className="input" style={{ resize: 'vertical' }} />
+              <textarea value={form.description} onChange={e => u('description', e.target.value)} placeholder="Tell collectors the story â€” what inspired this artwork, how it was created, what it means..." rows={5} className="input" style={{ resize: 'vertical' }} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button onClick={() => setStep(1)} className="btn btn-outline">← Back</button>
+              <button onClick={() => setStep(1)} className="btn btn-outline">â† Back</button>
               <button onClick={() => setStep(3)} className="btn btn-primary">Next: Auction Setup <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg></button>
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function ArtistSubmit() {
             <div>
               <p className="f-label" style={{ fontSize: '8px', marginBottom: '12px' }}>Edition Type</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                {[{ v: '1of1', l: '1 of 1 — Single Original', d: 'One winner. Maximum rarity.' }, { v: 'limited', l: 'Limited Edition — Multiple Prints', d: 'Set a fixed number of numbered copies.' }].map(e => (
+                {[{ v: '1of1', l: '1 of 1 â€” Single Original', d: 'One winner. Maximum rarity.' }, { v: 'limited', l: 'Limited Edition â€” Multiple Prints', d: 'Set a fixed number of numbered copies.' }].map(e => (
                   <button key={e.v} onClick={() => u('edition', e.v)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 18px', border: '1px solid', cursor: 'pointer', textAlign: 'left', borderColor: form.edition === e.v ? 'var(--c-gold)' : 'var(--c-rule2)', background: form.edition === e.v ? 'rgba(196,154,40,0.04)' : 'var(--c-bg2)', transition: 'all 0.2s' }}>
                     <div><p className="f-label" style={{ fontSize: '9px', color: form.edition === e.v ? 'var(--c-gold)' : 'var(--c-ink)', marginBottom: '2px' }}>{e.l}</p><p style={{ fontSize: '11px', color: 'var(--c-ink3)', fontWeight: 300 }}>{e.d}</p></div>
                     <div style={{ width: '16px', height: '16px', borderRadius: '50%', border: `2px solid ${form.edition === e.v ? 'var(--c-gold)' : 'var(--c-rule2)'}`, background: form.edition === e.v ? 'var(--c-gold)' : 'transparent', transition: 'all 0.2s', flexShrink: 0 }} />
@@ -195,7 +195,7 @@ export default function ArtistSubmit() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
               <div>
-                <p className="f-label" style={{ fontSize: '8px', marginBottom: '8px' }}>Reserve Price (₦)</p>
+                <p className="f-label" style={{ fontSize: '8px', marginBottom: '8px' }}>Reserve Price (â‚¦)</p>
                 <input type="number" value={form.reservePrice} onChange={e => u('reservePrice', e.target.value)} placeholder="Minimum acceptable bid" className="input" />
               </div>
               <div>
@@ -217,7 +217,7 @@ export default function ArtistSubmit() {
               ))}
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button onClick={() => setStep(2)} className="btn btn-outline">← Back</button>
+              <button onClick={() => setStep(2)} className="btn btn-outline">â† Back</button>
               <button onClick={() => setStep(4)} className="btn btn-primary">Next: Review <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg></button>
             </div>
           </div>
@@ -232,9 +232,9 @@ export default function ArtistSubmit() {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--c-rule)' }}>
                 {[
-                  { l: 'Artist', v: form.artistName || '—' }, { l: 'Artist Type', v: artistType },
-                  { l: 'Song', v: form.songTitle || '—' }, { l: 'Release', v: form.isSurprise ? 'Surprise Drop' : 'Pre-Release' },
-                  { l: 'Edition', v: form.edition === '1of1' ? '1 of 1' : `Limited × ${form.limitedCount}` }, { l: 'Reserve', v: form.reservePrice ? `₦${Number(form.reservePrice).toLocaleString()}` : '—' },
+                  { l: 'Artist', v: form.artistName || 'â€”' }, { l: 'Artist Type', v: artistType },
+                  { l: 'Song', v: form.songTitle || 'â€”' }, { l: 'Release', v: form.isSurprise ? 'Surprise Drop' : 'Pre-Release' },
+                  { l: 'Edition', v: form.edition === '1of1' ? '1 of 1' : `Limited Ã— ${form.limitedCount}` }, { l: 'Reserve', v: form.reservePrice ? `â‚¦${Number(form.reservePrice).toLocaleString()}` : 'â€”' },
                   { l: 'Duration', v: `${form.duration} days` }, { l: 'Spotify', v: form.spotifyUrl ? 'Provided' : 'Not provided' },
                 ].map(r => (
                   <div key={r.l} style={{ background: 'var(--c-bg)', padding: '14px 20px' }}>
@@ -250,13 +250,13 @@ export default function ArtistSubmit() {
                 { k: 'agreeCopyright', l: "I confirm I own the copyright to this artwork. I understand that submitting AI-generated or third-party art will result in a permanent account ban." },
               ].map(c => (
                 <label key={c.k} style={{ display: 'flex', gap: '12px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                  <input type="checkbox" checked={(form as Record<string, boolean>)[c.k]} onChange={e => u(c.k, e.target.checked)} style={{ accentColor: 'var(--c-gold)', marginTop: '3px', flexShrink: 0 }} />
+                  <input type="checkbox" checked={(form as unknown as Record<string, boolean>)[c.k]} onChange={e => u(c.k, e.target.checked)} style={{ accentColor: 'var(--c-gold)', marginTop: '3px', flexShrink: 0 }} />
                   <span style={{ fontSize: '13px', color: 'var(--c-ink3)', fontWeight: 300, lineHeight: 1.7 }}>{c.l}</span>
                 </label>
               ))}
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button onClick={() => setStep(3)} className="btn btn-outline">← Back</button>
+              <button onClick={() => setStep(3)} className="btn btn-outline">â† Back</button>
               <button onClick={() => setSubmitted(true)} className="btn btn-gold" disabled={!form.agreeTerms || !form.agreeCopyright} style={{ opacity: form.agreeTerms && form.agreeCopyright ? 1 : 0.4 }}>
                 Submit for Approval <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </button>
@@ -267,3 +267,4 @@ export default function ArtistSubmit() {
     </main>
   )
 }
+
