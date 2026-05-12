@@ -1,22 +1,40 @@
 import { useState, useEffect } from 'react'
+
 type T = { h: number; m: number; s: number }
-function useTick(i: T): T {
-  const [t, setT] = useState<T>(i)
+
+function useTick(init: T, onEnd?: () => void): T {
+  const [t, setT] = useState<T>(init)
   useEffect(() => {
-    const id = setInterval(() => setT(prev => {
-      let { h, m, s } = prev
-      s--; if (s < 0) { s = 59; m-- } if (m < 0) { m = 59; h-- } if (h < 0) { h = m = s = 0 }
-      return { h, m, s }
-    }), 1000)
+    const id = setInterval(() => {
+      setT(prev => {
+        let { h, m, s } = prev
+        s--
+        if (s < 0) { s = 59; m-- }
+        if (m < 0) { m = 59; h-- }
+        if (h < 0) {
+          clearInterval(id)
+          if (onEnd) onEnd()
+          return { h: 0, m: 0, s: 0 }
+        }
+        return { h, m, s }
+      })
+    }, 1000)
     return () => clearInterval(id)
   }, [])
   return t
 }
+
 function Unit({ v, l }: { v: number; l: string }) {
-  return <div className="cd-unit"><span className="cd-val">{String(v).padStart(2,'0')}</span><span className="cd-lbl">{l}</span></div>
+  return (
+    <div className="cd-unit">
+      <span className="cd-val">{String(v).padStart(2, '0')}</span>
+      <span className="cd-lbl">{l}</span>
+    </div>
+  )
 }
-export default function Countdown({ initial }: { initial: T }) {
-  const t = useTick(initial)
+
+export default function Countdown({ initial, onEnd }: { initial: T; onEnd?: () => void }) {
+  const t = useTick(initial, onEnd)
   return (
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px' }}>
       <Unit v={t.h} l="hr" />
