@@ -11,6 +11,8 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ArtistSubmit from './pages/ArtistSubmit'
+import VisualArtistRegister from './pages/VisualArtistRegister'
+import VisualArtistProfile from './pages/VisualArtistProfile'
 import Admin from './pages/Admin'
 import About from './pages/About'
 
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/artist-submit" element={<ArtistSubmit />} />
+        <Route path="/visual-artist/register" element={<VisualArtistRegister />} />
+        <Route path="/visual-artist/:username" element={<VisualArtistProfile />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/about" element={<About />} />
       </Routes>
